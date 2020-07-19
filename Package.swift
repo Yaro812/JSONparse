@@ -7,14 +7,16 @@ let package = Package(
     name: "JSONtoCSV",
     dependencies: [
         .package(url: "https://github.com/JohnSundell/Files",
-                 from: "4.0.0")
+                 from: "4.0.0"),
+        .package(url: "https://github.com/onevcat/Rainbow",
+                 from: "3.0.0"),
     ],
     targets: [
         .target(
             name: "JSONtoCSV",
             dependencies: ["JSONtoCSVcore"]),
         .target(name: "JSONtoCSVcore",
-                dependencies: ["Files"]),
+                dependencies: ["Files", "Rainbow"]),
         .testTarget(
             name: "JSONtoCSVTests",
             dependencies: ["JSONtoCSV"]),

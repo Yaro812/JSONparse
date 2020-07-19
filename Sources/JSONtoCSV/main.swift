@@ -3,11 +3,12 @@
 //
 
 import JSONtoCSVcore
+import Rainbow
 
 let tool = JSONtoCSV()
 
 do {
     try tool.run()
 } catch {
-    print("An error occured: \(error)")
+    print("An error occured: \(error)".red)
 }
