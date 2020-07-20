@@ -1,20 +1,25 @@
-# JSONtoCSV
+# JSONparse
 
-This script will convert a given JSON file to CSV format
+Swift command-line tool to parse JSON files to different formats
 
 ## Usage
 
-From script folder type
+You need to pass the path to the JSON file. It will be parsed in original file folder with the desired format and extension
 ```
-swift run JSONtoCSV <pathTo/originalFile.json> <pathTo/resultingFile.csv> <starting dictionary key>
+jsonparse <file-path> [--key <key>] [--csv] [--sql]
 ```
-You can omit the resulting file parameter. In that case the csv file will be created with the name of the original file and csv extension
+Currently only csv export is supported
+
 Example:
 ```
-swift run JSONtoCSV ../myFile.json ../myConvertedFile.csv parameter
+swift run jsonparse ../myFile.json -csv
+```
+will result in creation of
+```
+../myFile.csv
 ```
 
-## Instalation
+## Installation
 
 Currently only SPM is supported
 
