@@ -1,24 +1,10 @@
 import XCTest
 import class Foundation.Bundle
 
-final class JSONtoCSVTests: XCTestCase {
-    func testExecutionResult() throws {
-        guard #available(macOS 10.13, *) else {
-            return
-        }
-
-        let process = standardProcess(arguments: "Tests/Test.json")
-        try process.run()
-        process.waitUntilExit()
-
-        let output = standardOutput(for: process)
-        XCTAssertNotNil(output)
-        XCTAssertTrue(output!.contains("Script executed"), "Script finished abnormally: \(output!)")
-    }
-    
+final class JSONparseTests: XCTestCase {
     @available(macOS 10.13, *)
     func standardProcess(arguments: String) -> Process {
-        let fooBinary = productsDirectory.appendingPathComponent("JSONtoCSV")
+        let fooBinary = productsDirectory.appendingPathComponent("JSONparse")
 
         let process = Process()
         process.arguments = [arguments]

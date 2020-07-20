@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import JSONtoCSVcore
+@testable import JSONparseCore
 
 final class CSVTests: XCTestCase {
     func test_json_with_delimiters() {

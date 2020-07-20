@@ -1,7 +1,7 @@
 import XCTest
 
-import JSONtoCSVTests
+import JSONparseTests
 
 var tests = [XCTestCaseEntry]()
-tests += JSONtoCSVTests.allTests()
+tests += JSONparseTests.allTests()
 XCTMain(tests)

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import JSONtoCSVcore
+@testable import JSONparseCore
 
 final class JSONTests: XCTestCase {
     func test_json_uniform_dictionaries() throws {
