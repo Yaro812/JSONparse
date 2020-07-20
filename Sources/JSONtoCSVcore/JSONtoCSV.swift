@@ -7,7 +7,6 @@
 
 import Foundation
 import Rainbow
-import ShellOut
 
 enum JSONtoCSVError: Error {
     case argumentsMissing
