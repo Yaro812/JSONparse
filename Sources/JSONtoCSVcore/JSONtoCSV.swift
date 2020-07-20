@@ -15,8 +15,7 @@ enum JSONtoCSVError: Error {
 
 public final class JSONtoCSV {
     private let arguments: [String]
-    
-    var isHelpNeeded: Bool { return arguments.contains("-h") || arguments.contains("--help") }
+    private var isHelpNeeded: Bool { return arguments.contains("-h") || arguments.contains("--help") }
     
     public init(arguments: [String] = CommandLine.arguments) {
         self.arguments = arguments
@@ -36,14 +35,17 @@ public final class JSONtoCSV {
         return path.replacingOccurrences(of: ".json", with: ".csv")
     }
     
-    
     private func help() {
         print("\nThis script will convert a given JSON file to CSV format\n")
         print("Usage: from script folder type")
-        print("swift run JSONtoCSV <pathTo/originalFile.json> <pathTo/resultingFile.csv".yellow)
+        print("swift run JSONtoCSV <pathTo/originalFile.json> <pathTo/resultingFile.csv> <starting dictionary key>".yellow)
         print("You can omit the resulting file parameter. In that case the csv file will be created with the name of the original file and csv extension")
-        let example = "swift run JSONtoCSV ../myFile.json ../myConvertedFile.csv\nswift run JSONtoCSV ../myFile.json".white
-        print("Examples: \(example)")
+        let example = """
+        swift run JSONtoCSV ../myFile.json ../myConvertedFile.csv
+        swift run JSONtoCSV ../myFile.json
+        swift run JSONtoCSV ../myFile.json ../myConvertedFile.csv parameter
+        """.white
+        print("Examples:\n\(example)")
     }
     
     private func convert() throws {
@@ -51,7 +53,13 @@ public final class JSONtoCSV {
         let destinationPath = arguments.count > 2 ? arguments[2] : defaultFilePath(from: filePath)
         
         print("Reading file from \(filePath.white)")
-        let json = try JSON(path: filePath)
+        var json = try JSON(path: filePath)
+        if arguments.count > 3, case let .dict(dict) = json  {
+           let startKey = arguments[3]
+            if let value = dict[startKey] {
+                json = try JSON(value)
+            }
+       }
         let csv = CSV(json: json)
         print("Saving CSV string containing \(String(describing: csv.string.count).yellow) symbols to \(destinationPath.white)")
         try csv.save(to: destinationPath)

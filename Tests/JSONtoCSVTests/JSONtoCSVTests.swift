@@ -7,24 +7,37 @@ final class JSONtoCSVTests: XCTestCase {
             return
         }
 
+        let process = standardProcess(arguments: "Tests/Test.json")
+        try process.run()
+        process.waitUntilExit()
+
+        let output = standardOutput(for: process)
+        XCTAssertNotNil(output)
+        XCTAssertTrue(output!.contains("Script executed"), "Script finished abnormally: \(output!)")
+    }
+    
+    @available(macOS 10.13, *)
+    func standardProcess(arguments: String) -> Process {
         let fooBinary = productsDirectory.appendingPathComponent("JSONtoCSV")
 
         let process = Process()
+        process.arguments = [arguments]
         process.executableURL = fooBinary
 
         let pipe = Pipe()
         process.standardOutput = pipe
-
-        try process.run()
-        process.waitUntilExit()
-
+        
+        return process
+    }
+    
+    func standardOutput(for process: Process) -> String? {
+        guard let pipe = process.standardOutput as? Pipe else { return nil }
+        
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
-
-        XCTAssertEqual(output, "Script executed\n")
+        return output
     }
 
-    /// Returns path to the built products directory.
     var productsDirectory: URL {
       #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
