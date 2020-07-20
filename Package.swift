@@ -5,6 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "JSONtoCSV",
+    platforms: [
+          .macOS(.v10_14), .iOS(.v13)
+      ],
+      products: [
+          .library(
+              name: "JSONtoCSV",
+              targets: ["JSONtoCSV"])
+      ],
     dependencies: [
         .package(url: "https://github.com/JohnSundell/Files",
                  from: "4.0.0"),
@@ -15,8 +23,9 @@ let package = Package(
         .target(
             name: "JSONtoCSV",
             dependencies: ["JSONtoCSVcore"]),
-        .target(name: "JSONtoCSVcore",
-                dependencies: ["Files", "Rainbow"]),
+        .target(
+            name: "JSONtoCSVcore",
+            dependencies: ["Files", "Rainbow"]),
         .testTarget(
             name: "JSONtoCSVTests",
             dependencies: ["JSONtoCSV"]),
